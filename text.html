@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8'>
-    <title>使用虚拟DOM</title>
+    <title>函数组件</title>
     <script type="text/javascript" src="../js/react.development.js"></script>
     <script type="text/javascript" src="../js/react-dom.development.js"></script>
     <script type="text/javascript" src="../js/babel.min.js"></script>
@@ -16,17 +16,19 @@
 <body>
     <div id="test"></div>
     <script type="text/babel">
-       const data =['asdw','www','dwes'];
-       const VDOM =(
-            <div>
-                <h1 className='ces' style={{fontSize:'30px'}}>sss</h1>
-                <ul>{data.map((item,index)=>{
-                    return <li key={index}>{item}</li>
-                })}</ul>    
-            </div>
-
-       )
-       ReactDOM.render(VDOM,document.getElementById('test'));  
+        console.log(this)   //此处的this为undfind 因为经过bable的编译开启了严格模式 this无法指向window
+        //定义一个组件（函数式）
+        function Demo(){
+            return <div>200</div>
+        }
+        //渲染组件到页面
+        ReactDOM.render(<Demo/>,document.getElementById("test"))
+        /*
+            1.React解析组件标签，寻找到demo组件的定义位置
+            2.React发现demo组件是函数定义的，随后React去直接调用demo函数，将返回的虚拟dom渲染到指定页面
+            
+        
+        */
     </script>
 </body>
 </html>

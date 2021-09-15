@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>函数组件</title>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <style>
+        .ces{
+            background-color: red;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="test"></div>
+    
+    <script type="text/babel">
+      class Weather extends React.Component{
+        constructor(props){
+            super(props)
+            this.state={isHot:true}
+            this.changeWeather = this.changeWeather.bind(this)
+        }
+
+        render(){
+            return <button onClick={this.changeWeather}>点下试试{this.state.isHot ?'炎热':'凉爽'}</button>
+        }
+
+
+        changeWeather(){
+            const isHot=this.state.isHot
+            this.setState({isHot:!isHot})
+        }
+      }
+
+      ReactDOM.render(<Weather/>,document.getElementById('test'))
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>函数组件</title>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <style>
+        .shuru{
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="top"></div>
+    <div id="down"></div>
+    <script type="text/babel">      
+    class Top extends React.Component{
+        state={
+            username:'',
+            context:'',
+            data:[]
+        }
+        render(){
+            return(
+                <div>
+                    <input placeholder="用户名" value={this.state.username}  onChange={this.changeState('username')} ref={c=>this.getUsername=c}></input><br/>
+                    <textarea rows="10" cols="20"  value={this.state.context}  className="shuru" onChange={this.changeState('context')} ref={c=>this.getContext=c}></textarea><br/>
+                    <button onClick={this.sendInfo}>发表</button>
+                    <Down data={this.state.data}/>
+                </div>
+            )
+        }
+
+        changeState=(type)=>{
+            return (event)=>{this.setState({[type]:event.target.value})}
+        }
+        //将内容发送给下部
+        sendInfo=()=>{
+            if(this.state.username=="" && this.state.context==""){
+                alert("请先添加内容！")
+                return  
+            }else{
+                this.state.data.push(this.state.username,this.state.context)
+                this.setState({username:'',context:''})
+            }
+            
+        }
+
+    }
+
+    class Down extends React.Component{
+
+        render(){
+            const {data}=this.props
+            console.log(data)
+            return(
+                <div>
+                    <span>{data.length==0 ?'暂无内容':''}</span>
+                    <ul>
+                        {data.map((item,index)=>{
+                            return <li key={index}>{item}</li>
+                        })}
+                    </ul>
+                </div>
+                
+            )
+        }
+    }
+
+    ReactDOM.render(<Top/>,document.getElementById("top"))
+
+    </script>
+</body>
+</html>

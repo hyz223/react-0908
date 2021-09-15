@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>使用虚拟DOM</title>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <style>
+    .hyz{
+        background-color:red
+    }
+    </style>
+</head>
+<body>
+    <div id="test"></div>
+    <script type="text/babel">
+
+    class Life extends React.Component{
+
+        state={
+            opacity:1
+        }
+        render(){
+            const {opacity} =this.state
+            return(
+                <div>
+                    <h1 style={{opacity}}>分手了怎么办</h1>
+                    <button onClick={this.death}>一个按钮</button>
+                </div>
+            )
+        }
+        //只调用一次
+        componentDidMount(){
+               this.timer= setInterval(()=>{
+                    let {opacity} = this.state
+                    opacity-=0.1
+                    if(opacity<=0){
+                        opacity=1
+                    }
+                    this.setState({opacity})
+                },200)
+        }
+        //卸载组件
+        death=()=>{
+            ReactDOM.unmountComponentAtNode(document.getElementById("test"))
+        }
+
+        componentWillUnmount(){
+            clearInterval(this.timer)
+        }
+
+
+    }
+
+     ReactDOM.render(<Life/>,document.getElementById("test"))
+    </script>
+</body>
+</html>

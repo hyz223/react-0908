@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>使用虚拟DOM</title>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <style>
+    .hyz{
+        background-color:red
+    }
+    </style>
+</head>
+<body>
+    <div id="test"></div>
+    <script type="text/babel">
+
+        /*
+            1初始化阶段：
+                1.constructor()
+                2.componentWillMount()
+                3.render()
+                4.componentDidMount()
+            2.更新阶段 由组件内部this.setState()或父组件render触发
+                1.shouldComponentUpdate()
+                2.componentWillUpdate()
+                3.render()
+                4.componentDidUpdate()
+            3.卸载组件 由 ReactDOM.unmountComponentAtNode()触发
+                1.componentWillUnmount()
+        
+        */
+        class Count extends React.Component{
+            constructor(){
+                console.log('constructor')
+                super()
+                this.state={num:0}
+            }
+
+            state={
+                num:0
+            }
+
+            add=()=>{
+                const {num}= this.state
+                this.setState({num:num+1})
+            }
+            //组件将要挂载
+            componentWillMount(){
+                console.log('componentWillMount')
+            }
+            //组件挂载完毕
+            componentDidMount(){
+                console.log('componentDidMount')
+            }
+            //组件将要卸载
+            componentWillUnmount(){
+                console.log('componentWillUnmount')
+            }
+            //控制组件是否更新 该钩子可以进行组件优化
+            shouldComponentUpdate(){
+                return true
+            }
+
+            //组件将要更新
+            componentWillUpdate(){
+                console.log('componentWillUpdate')
+            }
+
+            //组件更新完毕 
+            componentDidUpdate(){
+                console.log('componentDidUpdate')
+            }
+            render(){
+                console.log('render')
+                return(
+                    <div>
+                        <span>我现在的数字是{this.state.num}</span><br/>
+                        <button onClick={this.add}>点我加1</button>    
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<Count/>,document.getElementById("test"))
+    </script>
+</body>
+</html>
